@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 {% load staticfiles %}
+{% load rango_template_tags %}
 
 <html>
     <head lang="en">
@@ -16,6 +18,13 @@
                         <!-- Page specific content goes here -->  
             {% endblock %}  
         </div>
+        
+        <div>
+            {% block sidebar_block %}
+                {% get_category_list category %}
+            {% endblock %}
+        </div>
+
         <hr />
         <div>
             <!-- THIS PART NEEDS TO BE COMMENTED OUT: Otherwise, every single page will have all 3 links to add_category, about, and index
