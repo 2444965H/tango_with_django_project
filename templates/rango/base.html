@@ -15,7 +15,6 @@
     <body>
         <div>
             {% block body_block %}
-                        <!-- Page specific content goes here -->  
             {% endblock %}  
         </div>
         
@@ -27,7 +26,6 @@
 
         <hr />
         <div>
-             <!--Every single page will have all 3 links to add_category, about, and index (Comment them out, if not desired)-->
                 <ul>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'rango:restricted' %}">Restricted Page</a></li>

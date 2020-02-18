@@ -6,11 +6,8 @@ from rango.forms import CategoryForm
 from rango.forms import PageForm
 from django.shortcuts import redirect
 from django.urls import reverse
-#User Registration @Ch9.6 
 from rango.forms import UserForm, UserProfileForm
-#logout added @Ch9.9
 from django.contrib.auth import authenticate, login, logout
-#Chapter 9.7
 from django.contrib.auth.decorators import login_required
 
 
@@ -52,6 +49,7 @@ def show_category(request, category_name_slug):
         context_dict['pages'] = None
     return render(request, 'rango/category.html', context=context_dict)
 
+#Chapter 9
 @login_required
 def add_category(request):
     form = CategoryForm()
@@ -74,7 +72,7 @@ def add_page(request, category_name_slug):
         category = None
 
     if category is None:
-        return redirect('/rango/')
+        return redirect(reverse('rango:index'))
 
     form = PageForm()
 
@@ -115,7 +113,7 @@ def register(request):
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
                 profile.save()
-                #registered = True
+
         else:
             print(user_form.errors, profile_form.errors)
     else:
@@ -128,8 +126,6 @@ def register(request):
                             'profile_form': profile_form,
                             'registered': registered})
 
-
-#Chapter 9.7    
 
 def user_login(request):
     if request.method == 'POST':
@@ -150,7 +146,6 @@ def user_login(request):
         return render(request, 'rango/login.html')
 
 
-#Chapter 9.8
 def some_view(request):
     if not request.user.is_authenticated():
         return HttpResponse("You are logged in.")
@@ -159,9 +154,8 @@ def some_view(request):
 
 @login_required
 def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
+    return render(request, 'rango/restricted.html')
 
-#Chapter 9.9
 @login_required
 def user_logout(request):
     logout(request)
